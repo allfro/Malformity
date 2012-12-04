@@ -39,3 +39,21 @@ D:This was pointless!
 Cool right? If you have any further questions don't hesitate to drop us a line;)
 
 Have fun!
+
+---
+
+# Package Requires
+
+* `cif-python-client`: https://github.com/collectiveintel/cif-client-python/
+* `sploitego`: https://github.com/allfro/canari
+
+
+# Installation
+
+```bash
+$ sudo python setup.py install
+$ sploitego install-package virustotal
+```
+
+Edit `virustotal.conf` and `cif.conf` once the package is installed to Maltego with the appropriate values for your VirusTotal and CIF API keys.
+Import the entity definitions from `maltego/` directory in your Maltego UI.
