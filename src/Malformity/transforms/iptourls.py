@@ -9,7 +9,7 @@ from cif import Client
 
 
 __author__ = 'Kyle Maxwell'
-__copyright__ = 'Copyright 2012, Virustotal Project'
+__copyright__ = 'Copyright 2012, Malformity Project'
 __credits__ = []
 
 __license__ = 'GPL'
@@ -26,7 +26,7 @@ __all__ = [
 @configure(
     label="To URLs [CIF]",
     description="This transform returns URLs with data from CIF queries based on IP address.",
-    uuids=['virustotal.v2.IPv4AddressToURLs_CIF'],
+    uuids=['cif.v2.IPv4AddressToURLs_CIF'],
     inputs=[('Collective Intelligence', IPv4Address)]
 )
 def dotransform(request, response):
