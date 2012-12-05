@@ -10,6 +10,10 @@ __maintainer__ = 'Keith Gilbert - @digital4rensics'
 __email__ = 'Keith@digital4rensics.com'
 __status__ = 'Development'
 __all__ = [
+    'malwr_hash2dhash',
+    'malwr_hash2process',
+    'malwr_hash2url',
+    'malwr_hash2domain',
     'malwr_hash2ip',
     'threatexpert_hash2mutex',
     'common',

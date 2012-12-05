@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import mechanize
-import re
 from BeautifulSoup import BeautifulSoup
-from canari.maltego.entities import IPv4Address
-from common.entities import Hash
 from canari.maltego.utils import debug, progress
 from canari.framework import configure #, superuser
-from common.threatexpert import build
+from canari.maltego.entities import URL
+from common.entities import Hash
+from common.malwr import build
 
 __author__ = 'Keith Gilbert - @digital4rensics'
 __copyright__ = 'Copyright 2012, Malformity Project'
@@ -25,22 +24,21 @@ __all__ = [
 
 #@superuser
 @configure(
-    label='Hash to IP - ThreatExpert',
-    description='Returns an IP from an existing ThreatExpert report for a Hash',
-    uuids=[ 'malformity.v1.ThreatExpert_Hash2IP' ],
+    label='Hash to URL - Malwr',
+    description='Returns URLS for HTTP requests from Malwr.com report for a Hash',
+    uuids=[ 'malformity.v1.Malwr_Hash2URL' ],
     inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
-
 def dotransform(request, response):
-	# Build the request
+    #Build request
 	page = build(request.value)
 	
-	# Search the page to extract all IP addresses present
-	try:
-		for element in page.findAll(text=re.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")):
-			response += IPv4Address(element)
-	except:
-		sys.exit("Report contains no IPs.")
-			
+	#Find the Hosts section and extract IPs	
+	table = page.find("div", {"id" : "network_http"}).findNext('table')
+	elements = table.findAll("span", {"class" : "mono"})
+	for element in elements:
+		text = element.find(text=True)
+		response += URL(text)
+		
 	return response

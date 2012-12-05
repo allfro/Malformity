@@ -18,7 +18,6 @@ __all__ = [
     'AnalysisEntity',
     'InsiderThreat',
     'AdvancedTargetedAttacker',
-    'YourOrganizationEntity',
     'OpportunityAttacker',
     'OrganizedCrime',
     'ZombieHost',
@@ -90,12 +89,8 @@ class AdvancedTargetedAttacker(AnalysisEntity):
     pass
 
 
-class YourorganizationEntity(Entity):
-    namespace = 'yourorganization'
-
-
 @EntityField(name='properties.opportunityattacker', propname='propertiesopportunityattacker', displayname='Opportunity Attacker')
-class OpportunityAttacker(YourorganizationEntity):
+class OpportunityAttacker(AnalysisEntity):
     pass
 
 
@@ -115,7 +110,7 @@ class CompromisedHost(AnalysisEntity):
 
 
 @EntityField(name='properties.botnetdnsrelay', propname='propertiesbotnetdnsrelay', displayname='Botnet DNS Relay')
-class BotnetDNSNode(YourorganizationEntity):
+class BotnetDNSNode(AnalysisEntity):
     pass
 
 
@@ -175,7 +170,7 @@ class Filename(AnalysisEntity):
 
 
 @EntityField(name='properties.maliciouswebsite', propname='propertiesmaliciouswebsite', displayname='Malicious Host')
-class MaliciousWebsite(YourorganizationEntity):
+class MaliciousWebsite(AnalysisEntity):
     pass
 
 

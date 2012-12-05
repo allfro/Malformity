@@ -6,6 +6,7 @@ from canari.maltego.utils import debug, progress
 from canari.framework import configure #, superuser
 from common.entities import Hash
 from canari.maltego.entities import Phrase
+from common.threatexpert import build
 
 __author__ = 'Keith Gilbert - @digital4rensics'
 __copyright__ = 'Copyright 2012, Malformity Project'
@@ -31,18 +32,8 @@ __all__ = [
 )
 
 def dotransform(request, response):
-	url = 'http://threatexpert.com/report.aspx?md5=' + request.value
-	browser = mechanize.Browser()
-	
-	#G rabbing the page HTML and creating a BeautifulSoup element
-	
-	try:
-		report = browser.open(url)
-		html = report.read()
-		page = BeautifulSoup(html)
-		
-	except:
-		sys.exit("Report does not exist.")
+	#Build the request
+	page = build(request.value)
 	
 	try:
 		try:
