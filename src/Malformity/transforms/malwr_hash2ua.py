@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 
+import re
 import mechanize
 from BeautifulSoup import BeautifulSoup
 from canari.maltego.utils import debug, progress
 from canari.framework import configure #, superuser
-from common.entities import Hash
+from common.entities import Hash, UserAgent
 from common.malwr import build
 
 __author__ = 'Keith Gilbert - @digital4rensics'
@@ -18,26 +19,28 @@ __email__ = 'Keith@digital4rensics.com'
 __status__ = 'Development'
 
 __all__ = [
-    'dotransform'
+    'dotransform',
 ]
 
 #@superuser
 @configure(
-    label='Hash to Dropped File Hash - Malwr',
-    description='Returns MD5 hashes of all dropped files from a Malwr.com report for a Hash',
-    uuids=[ 'malformity.v1.Malwr_Hash2dHash' ],
+    label='Hash to User Agent - Malwr',
+    description='Returns User Agents from HTTP requests in a Malwr.com report for a Hash',
+    uuids=[ 'malformity.v1.Malwr_Hash2UA' ],
     inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
 
 def dotransform(request, response):
-	#Build Request
+	#Build request
 	page = build(request.value)
-
-	#Find the dropped files section, and parse MD5 hashes
-	procs = page.find("div", {"id" : "dropped_files"}).findAll('tr')
-	for element in procs:
-		if element.findNext('td').text == "MD5:":
-			response += Hash(element.text[4::])
-
+	
+	table = page.find("div", {"id" : "network_http"}).findNext('table')
+	elements = table.findAll("pre")
+	for element in elements:
+		text = element.text.splitlines()
+		for entry in text:
+			if re.search('User-Agent:', entry):
+				response += UserAgent(entry[12::])
+				
 	return response

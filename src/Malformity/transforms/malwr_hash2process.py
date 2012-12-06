@@ -23,10 +23,10 @@ __all__ = [
 
 #@superuser
 @configure(
-    label='TODO: To Something [Hello World]',
-    description='TODO: Returns a Something entity with the phrase "Hello Word!"',
-    uuids=[ 'TODO something.v2.SomethingToPhrase_HelloWorld' ],
-    inputs=[ ( 'TODO: Some Set', SomethingEntity ) ],
+    label='Hash to Processes - Malwr',
+    description='Returns process names from a Malwr.com report for a Hash',
+    uuids=[ 'malformity.v1.Malwr_Hash2Process' ],
+    inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
 def dotransform(request, response):

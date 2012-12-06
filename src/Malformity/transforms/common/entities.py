@@ -38,7 +38,8 @@ __all__ = [
     'Certificate',
     'Exploit',
     'ExploitationChain',
-    'Phishing'
+    'Phishing',
+    'UserAgent'
 ]
 
 """
@@ -192,3 +193,8 @@ class ExploitationChain(AnalysisEntity):
 @EntityField(name='properties.phishing', propname='propertiesphishing', displayname='Phishing')
 class Phishing(AnalysisEntity):
     pass
+
+
+@EntityField(name='properties.useragent', propname='propertiesuseragent', displayname='User Agent')
+class UserAgent(AnalysisEntity):
+	pass

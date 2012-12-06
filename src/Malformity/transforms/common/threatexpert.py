@@ -18,7 +18,7 @@ __all__ = [
     'build',
 ]
 
-def build(hash)
+def build(hash):
 	# Construct the request
 	url = 'http://threatexpert.com/report.aspx?md5=' + hash
 	browser = mechanize.Browser()
