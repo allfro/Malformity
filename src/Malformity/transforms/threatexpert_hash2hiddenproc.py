@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
 import mechanize
-import re
 from BeautifulSoup import BeautifulSoup
-from canari.maltego.entities import IPv4Address
-from common.entities import Hash
 from canari.maltego.utils import debug, progress
 from canari.framework import configure #, superuser
+from common.entities import Hash, MaliciousProcess
 from common.threatexpert import build
 
 __author__ = 'Keith Gilbert - @digital4rensics'
@@ -25,22 +23,24 @@ __all__ = [
 
 #@superuser
 @configure(
-    label='Hash to IP - ThreatExpert',
-    description='Returns an IP from an existing ThreatExpert report for a Hash',
-    uuids=[ 'malformity.v1.ThreatExpert_Hash2IP' ],
+    label='Hash to Hidden Process - ThreatExpert',
+    description='Returns a list of hidden processes from a ThreatExpert report for a Hash',
+    uuids=[ 'malformity.v1.ThreatExpert_Hash2HiddenProc' ],
     inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
-
 def dotransform(request, response):
-	# Build the request
-	page = build(request.value)
-	
-	# Search the page to extract all IP addresses present
-	try:
-		for element in page.findAll(text=re.compile("^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$")):
-			response += IPv4Address(element)
-	except:
-		pass
-			
-	return response
+    page = build(request.value)
+    
+    try:
+    	dfiles = page.find(text=' from the user:').findNext('table')
+    except:
+    	pass
+    
+    if dfiles is not None:
+    	for file in dfiles.findAll("td", {"class" : "cell_1"}):
+    		text = file.text.splitlines()
+    		for entry in text:
+    			response += MaliciousProcess(entry)
+    
+    return response

@@ -35,9 +35,12 @@ def dotransform(request, response):
 	page = build(request.value)
 
 	#Find the dropped files section, and parse MD5 hashes
-	procs = page.find("div", {"id" : "dropped_files"}).findAll('tr')
-	for element in procs:
-		if element.findNext('td').text == "MD5:":
-			response += Hash(element.text[4::])
-
+	try:
+		procs = page.find("div", {"id" : "dropped_files"}).findAll('tr')
+		for element in procs:
+			if element.findNext('td').text == "MD5:":
+				response += Hash(element.text[4::])
+	except:
+		return response
+		
 	return response

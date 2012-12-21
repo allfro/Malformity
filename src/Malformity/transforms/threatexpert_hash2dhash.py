@@ -36,7 +36,10 @@ def dotransform(request, response):
 	page = build(request.value)
 
 	#Locate the dropped files section of the report
-	dfiles = page.find(text='The following files were created in the system:').findNext('table')
+	try:
+		dfiles = page.find(text='The following files were created in the system:').findNext('table')
+	except:
+		pass
 	
 	if dfiles is not None:
 		#Find the appropriate cell and extract the MD5 hash

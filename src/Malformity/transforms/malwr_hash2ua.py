@@ -35,12 +35,15 @@ def dotransform(request, response):
 	#Build request
 	page = build(request.value)
 	
-	table = page.find("div", {"id" : "network_http"}).findNext('table')
-	elements = table.findAll("pre")
-	for element in elements:
-		text = element.text.splitlines()
-		for entry in text:
-			if re.search('User-Agent:', entry):
-				response += UserAgent(entry[12::])
-				
+	try:
+		table = page.find("div", {"id" : "network_http"}).findNext('table')
+		elements = table.findAll("pre")
+		for element in elements:
+			text = element.text.splitlines()
+			for entry in text:
+				if re.search('User-Agent:', entry):
+					response += UserAgent(entry[12::])
+	except:
+		return response
+					
 	return response

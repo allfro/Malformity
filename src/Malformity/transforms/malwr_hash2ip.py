@@ -36,10 +36,13 @@ def dotransform(request, response):
 	page = build(request.value)
 	
 	#Find the Hosts section and extract IPs	
-	table = page.find("div", {"id" : "network_hosts"}).findNext('table')
-	elements = table.findAll('td', {"class" : "row"})
-	for element in elements:
-		text = element.find(text=True)
-		response += IPv4Address(text)
-	
+	try:
+		table = page.find("div", {"id" : "network_hosts"}).findNext('table')
+		elements = table.findAll('td', {"class" : "row"})
+		for element in elements:
+			text = element.find(text=True)
+			response += IPv4Address(text)
+	except:
+		return response
+		
 	return response

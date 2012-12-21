@@ -29,6 +29,6 @@ def build(hash):
 		html = report.read()
 		page = BeautifulSoup(html)
 	except:
-		sys.exit("Report does not exist.")
+		sys.exit("Error building URL.")
 		
 	return page

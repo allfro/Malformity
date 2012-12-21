@@ -62,9 +62,9 @@ def dotransform(request, response):
 					response += Phrase(current)
 			return response
 		else:
-			sys.exit("No Mutexes Reported")
+			pass
 	
 	except:
-		sys.exit("Error finding Mutexes.")
+		pass
 	
 	return response

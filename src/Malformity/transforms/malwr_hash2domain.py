@@ -35,10 +35,13 @@ def dotransform(request, response):
     page = build(request.value)
     	
     #Finds the DNS section and extracts domains
-    table = page.find("div", {"id" : "network_dns"}).findNext('table')
-    elements = table.findAll("span", {"class" : "mono"})
-    for element in elements:
-    	text = element.find(text=True)
-    	response += Domain(text)
+    try:
+    	table = page.find("div", {"id" : "network_dns"}).findNext('table')
+    	elements = table.findAll("span", {"class" : "mono"})
+    	for element in elements:
+    		text = element.find(text=True)
+    		response += Domain(text)
+    except:
+    	return response
     
     return response
