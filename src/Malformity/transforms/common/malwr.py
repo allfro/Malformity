@@ -2,7 +2,7 @@
 
 import mechanize
 from BeautifulSoup import BeautifulSoup
-from canari.framework import configure #, superuser
+from canari.maltego.message import MaltegoException
 
 __author__ = 'Keith Gilbert - @digital4rensics'
 __copyright__ = 'Copyright 2012, Malformity Project'
@@ -29,6 +29,6 @@ def build(hash):
 		html = report.read()
 		page = BeautifulSoup(html)
 	except:
-		sys.exit("Error building URL.")
+		raise MaltegoException("Error building URL.")
 		
 	return page

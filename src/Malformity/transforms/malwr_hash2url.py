@@ -32,16 +32,16 @@ __all__ = [
 )
 def dotransform(request, response):
     #Build request
-	page = build(request.value)
-	
-	#Find the Hosts section and extract IPs	
-	try:
-		table = page.find("div", {"id" : "network_http"}).findNext('table')
-		elements = table.findAll("span", {"class" : "mono"})
-		for element in elements:
-			text = element.find(text=True)
-			response += URL(text)
-	except:
-		return response
-			
-	return response
+    page = build(request.value)
+
+    #Find the Hosts section and extract IPs
+    try:
+        table = page.find("div", {"id" : "network_http"}).findNext('table')
+        elements = table.findAll("span", {"class" : "mono"})
+        for element in elements:
+            text = element.find(text=True)
+            response += URL(text)
+    except:
+        return response
+
+    return response

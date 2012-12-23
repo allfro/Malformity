@@ -30,25 +30,25 @@ __all__ = [
     inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
-
 def dotransform(request, response):
-	#Build the request
-	page = build(request.value)
+    #Build the request
+    page = build(request.value)
 
-	#Locate the dropped files section of the report
-	try:
-		dfiles = page.find(text='The following files were created in the system:').findNext('table')
-	except:
-		pass
-	
-	if dfiles is not None:
-		#Find the appropriate cell and extract the MD5 hash
-		for file in dfiles.findAll("td", {"class" : "cell_1"}):
-			text = file.text.splitlines()
-			for entry in text:
-				if re.search('MD5:', entry):
-					response += Hash(entry[7:39])
-	else:
-		print "No Dropped Files"
-		
-	return response
+    #Locate the dropped files section of the report
+    dfiles = None
+    try:
+        dfiles = page.find(text='The following files were created in the system:').findNext('table')
+    except:
+        pass
+
+    if dfiles is not None:
+        #Find the appropriate cell and extract the MD5 hash
+        for file in dfiles.findAll("td", {"class" : "cell_1"}):
+            text = file.text.splitlines()
+            for entry in text:
+                if re.search('MD5:', entry):
+                    response += Hash(entry[7:39])
+    else:
+        print "No Dropped Files"
+
+    return response

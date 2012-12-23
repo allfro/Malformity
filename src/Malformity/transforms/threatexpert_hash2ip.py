@@ -31,7 +31,6 @@ __all__ = [
     inputs=[ ( 'analysis', Hash ) ],
     debug=True
 )
-
 def dotransform(request, response):
 	# Build the request
 	page = build(request.value)

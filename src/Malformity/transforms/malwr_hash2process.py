@@ -32,15 +32,15 @@ __all__ = [
 def dotransform(request, response):
     #Build Request
     page = build(request.value)
-    
+
     #Find the Process tree and extract processes
     try:
-    	procs = page.find("ul", {"id" : "tree"}).findNext('li')
-    	elements = procs.findAll("span", {"class" : "mono"})
-    	for element in elements:
-    		text = element.find(text=True)
-    		response += MaliciousProcess(text)
+        procs = page.find("ul", {"id" : "tree"}).findNext('li')
+        elements = procs.findAll("span", {"class" : "mono"})
+        for element in elements:
+            text = element.find(text=True)
+            response += MaliciousProcess(text)
     except:
-    	return response
-    	
+        return response
+
     return response

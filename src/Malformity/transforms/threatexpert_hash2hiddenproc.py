@@ -31,16 +31,16 @@ __all__ = [
 )
 def dotransform(request, response):
     page = build(request.value)
-    
+
     try:
-    	dfiles = page.find(text=' from the user:').findNext('table')
+        dfiles = page.find(text=' from the user:').findNext('table')
     except:
-    	pass
-    
+        pass
+
     if dfiles is not None:
-    	for file in dfiles.findAll("td", {"class" : "cell_1"}):
-    		text = file.text.splitlines()
-    		for entry in text:
-    			response += MaliciousProcess(entry)
-    
+        for file in dfiles.findAll("td", {"class" : "cell_1"}):
+            text = file.text.splitlines()
+            for entry in text:
+                response += MaliciousProcess(entry)
+
     return response
