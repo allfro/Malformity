@@ -9,10 +9,3 @@ __version__ = '0.1'
 __maintainer__ = 'Keith Gilbert - @digital4rensics'
 __email__ = 'Keith@digital4rensics.com'
 __status__ = 'Development'
-
-__all__ = [
-    'etc',
-    'images',
-    'maltego',
-    'external'
-]
